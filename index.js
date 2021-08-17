@@ -11,12 +11,13 @@ const booksRouter = require('./routes/bookRouter');
 const defaultRouter = require('./routes/defaultRouter');
 const app = express();
 
+
+
 app.listen(3000, function () {
   console.log("Server is running on 3000");
 });
 
 var accessLogStream = fs.createWriteStream(path.join(__dirname, 'logs', 'requests.log'), { flags: 'a' })
-
 const removePoweredByHeader = (req, res, next) => {
   res.setHeader('X-Powered-By', '');
   next();

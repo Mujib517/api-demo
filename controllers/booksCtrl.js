@@ -1,3 +1,5 @@
+const logger = require('../utils/logger');
+
 const books = [
   { id: 1, name: "Clean Code", price: 200 },
   { id: 2, name: "Clean Coder", price: 100 },
@@ -6,11 +8,13 @@ const books = [
 
 class BooksCtrl {
   get(req, res) {
+    logger.appLogger().log({ level: 'error', message: 'Books get request' });
     res.status(200);
     res.json(books);
   }
 
   getById(req, res) {
+    logger.log({ level: 'error', message: 'Books get request' });
     // const id = parseInt(req.params.id);
     const id = +req.params.id;
     const result = books.find(book => book.id === id);
