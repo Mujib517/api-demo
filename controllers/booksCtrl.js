@@ -52,19 +52,15 @@ class BooksCtrl {
     }
   }
 
-  post(req, res) {
-
-    const bookExists = books.find(book => book.id == req.body.id);
-    if (bookExists) {
-      res.status(400);
-      res.send("Already exists");
-    }
-
-    else {
-      books.push(req.body);
-
+  async post(req, res) {
+    try {
+      await bookRepository.save(req.body);
       res.status(201);
-      res.json();
+      res.send();
+    } catch (e) {
+      console.log(e);
+      res.status(500);
+      res.send("Internal Server Error");
     }
   }
 

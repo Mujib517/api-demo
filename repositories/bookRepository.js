@@ -22,7 +22,16 @@ function BookRepository() {
     const query = {
       text: 'SELECT id,name,price FROM books where id=$1',
       values: [id],
-    }
+    };
+
+    return pool.query(query);
+  }
+
+  this.save = (book) => {
+    const query = {
+      text: 'INSERT INTO books(name,price) VALUES ($1,$2)',
+      values: [book.name, book.price],
+    };
 
     return pool.query(query);
   }
