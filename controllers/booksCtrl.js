@@ -64,32 +64,21 @@ class BooksCtrl {
     }
   }
 
-  remove(req, res) {
+  async remove(req, res) {
     const id = +req.params.id;
-
-    for (let i = 0; i < books.length; i++) {
-      if (books[i].id === id) {
-        books.splice(i, 1);
-      }
-    }
+    await bookRepository.delete(id);
 
     res.status(204); // no content
     res.send();
   }
 
-  update(req, res) {
+  async update(req, res) {
     const id = +req.params.id;
 
-    const book = books.find(book => book.id === id);
-    if (book) {
-      book.name = req.body.name;
-      book.price = req.body.price;
-      res.status(204);
-      res.send();
-    } else {
-      res.status(404);
-      res.send("Not found");
-    }
+    await bookRepository.update(id, req.body);
+
+    res.status(204);
+    res.send();
   }
 
   patch(req, res) {

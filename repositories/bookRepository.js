@@ -35,6 +35,24 @@ function BookRepository() {
 
     return pool.query(query);
   }
+
+  this.delete = (id) => {
+    const query = {
+      text: 'DELETE FROM books WHERE id=$1',
+      values: [id],
+    };
+
+    return pool.query(query);
+  }
+
+  this.update = (id, book) => {
+    const query = {
+      text: 'UPDATE books SET name=$2,price=$3 WHERE id=$1',
+      values: [id, book.name, book.price],
+    };
+    return pool.query(query);
+  }
+
 }
 
 
