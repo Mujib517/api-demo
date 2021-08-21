@@ -1,4 +1,5 @@
 const logger = require('../utils/logger');
+const bookRepository = require('../repositories/bookRepository');
 
 const books = [
   { id: 1, name: "Clean Code", price: 200 },
@@ -8,9 +9,15 @@ const books = [
 
 class BooksCtrl {
   get(req, res) {
-    logger.log({ level: 'error', message: { time: new Date(), url: req.url, addr: req.remoteAddr } });
-    res.status(200);
-    res.json(books);
+    // asynchronous code
+    bookRepository.get((err, data) => {
+      if (err) {
+        res.send("failed");
+      } else {
+        res.status(200);
+        res.send(data);
+      }
+    });
   }
 
   getById(req, res) {
