@@ -8,35 +8,47 @@ const books = [
 ];
 
 class BooksCtrl {
-  get(req, res) {
+  async get(req, res) {
     // asynchronous code
-    bookRepository.get((err, data) => {
-      if (err) {
-        res.send("failed");
-      } else {
-        res.status(200);
-        res.send(data);
-      }
-    });
+    // bookRepository.get((err, data) => {
+    //   if (err) {
+    //     res.send("failed");
+    //   } else {
+    //     res.status(200);
+    //     res.send(data);
+    //   }
+    // });
+
+    // bookRepository.get()
+    //   .then(function (data) {
+    //     res.status(200);
+    //     res.json(data.rows);
+    //   })
+    //   .catch(function (err) {
+    //     logger.error(err);
+    //     res.status(500);
+    //     res.send("error");
+    //   });
+
+    try {
+      const data = await bookRepository.get();
+      res.status(200);
+      res.json(data.rows);
+    } catch (err) {
+      logger.error(err);
+      res.status(500);
+      res.send("error");
+    }
   }
 
-  getById(req, res) {
-    logger.log({ level: 'error', message: 'Books get request' });
-    // const id = parseInt(req.params.id);
-    const id = +req.params.id;
-    const result = books.find(book => book.id === id);
-    // let result;
-    // for (let i = 0; i < books.length; i++) {
-    //   if (id == books[i].id) result = books[i];
-    // }
-
-    if (!result) {
-      res.status(404);
-      res.send("not found");
-    }
-    else {
+  async getById(req, res) {
+    const data = await bookRepository.getById(+req.params.id);
+    if (data.rows.length) {
       res.status(200);
-      res.json(result);
+      res.json(data.rows[0]);
+    } else {
+      res.status(404);
+      res.send("Not found");
     }
   }
 
