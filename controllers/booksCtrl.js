@@ -8,7 +8,7 @@ const books = [
 
 class BooksCtrl {
   get(req, res) {
-    logger.appLogger().log({ level: 'error', message: 'Books get request' });
+    logger.log({ level: 'error', message: { time: new Date(), url: req.url, addr: req.remoteAddr } });
     res.status(200);
     res.json(books);
   }

@@ -1,4 +1,9 @@
 node_modules
 .vscode
-logs/requests.log
+# logs/requests.log
+# logs/errors.log
+
+logs/*.log
+
+logs/
 .DS_STORE

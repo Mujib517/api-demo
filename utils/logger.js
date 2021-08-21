@@ -1,14 +1,14 @@
 const winston = require('winston');
 
-class Logger {
-  appLogger() {
-    const logger = winston.createLogger({
-      level: 'info',
-      format: winston.format.json(),
-      transports: [new winston.transports.Console()]
-    })
-    return logger;
-  }
-}
+const logger = winston.createLogger({
+  level: 'info', // info, error, warn, debug
+  format: winston.format.json(),
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: 'logs/errors.log' })
+  ]
+})
 
-module.exports = new Logger();
+module.exports = logger;
+
+

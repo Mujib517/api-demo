@@ -1,5 +1,5 @@
 const express = require('express');
-const booksCtrl = require('../controllers/booksCtrl.old');
+const booksCtrl = require('../controllers/booksCtrl');
 const router = express.Router();
 
 // REST api principle 1: uniform interface
