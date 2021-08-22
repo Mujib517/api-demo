@@ -34,8 +34,14 @@ class BooksCtrl {
       const search = req.query.search || "";
       const sort = req.query.sort || "";
       const direction = req.query.direction || "";
+      const limit = req.query.limit || 2;
+      const offset = req.query.offset || 0;
       const options = {
-        search, sort, direction
+        search,
+        sort,
+        direction,
+        limit,
+        offset
       };
       const data = await bookRepository.get(options);
       res.status(200);

@@ -22,8 +22,10 @@ function BookRepository() {
     return 'asc';
   }
 
-  this.get = ({ search, sort, direction }) => {
+  this.get = ({ search, sort, direction, offset, limit }) => {
     const options = {
+      offset,
+      limit,
       where: {
         name: {
           [Op.iLike]: `%${search}%`
