@@ -5,7 +5,24 @@ const Op = Sequelize.Op;
 
 function BookRepository() {
 
-  this.get = (search) => {
+  const isSortFieldValid = (field) => {
+    const sortFields = {
+      name: true,
+      price: true,
+      id: true,
+    };
+
+    return sortFields[field.toLowerCase()];
+  }
+
+  const getSortDirection = (direction) => {
+    direction = direction.toLowerCase();
+    if (direction === 'asc') return direction;
+    if (direction === 'desc') return direction;
+    return 'asc';
+  }
+
+  this.get = ({ search, sort, direction }) => {
     const options = {
       where: {
         name: {
@@ -13,6 +30,8 @@ function BookRepository() {
         }
       }
     };
+    if (isSortFieldValid(sort)) options.order = [[sort.toLowerCase(), getSortDirection(direction)]];
+
     return Book.findAll(options);
   }
 
@@ -29,6 +48,5 @@ function BookRepository() {
     return Book.destroy({ where: { id: id } });
   }
 }
-
 
 module.exports = new BookRepository();

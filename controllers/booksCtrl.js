@@ -32,13 +32,18 @@ class BooksCtrl {
 
     try {
       const search = req.query.search || "";
-      const data = await bookRepository.get(search);
+      const sort = req.query.sort || "";
+      const direction = req.query.direction || "";
+      const options = {
+        search, sort, direction
+      };
+      const data = await bookRepository.get(options);
       res.status(200);
       res.json(data);
     } catch (err) {
       logger.error(err);
       res.status(500);
-      res.send("error");
+      res.send("Internal Server Error");
     }
   }
 
