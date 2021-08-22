@@ -22,7 +22,8 @@ function BookRepository() {
     return 'asc';
   }
 
-  this.get = ({ search, sort, direction, offset, limit }) => {
+  this.get = ({ search, sort, direction, pageIndex, limit }) => {
+    const offset = pageIndex * limit;
     const options = {
       offset,
       limit,
@@ -36,6 +37,21 @@ function BookRepository() {
 
     return Book.findAll(options);
   }
+
+  // this.get = ({ search, sort, direction, offset, limit }) => {
+  //   const options = {
+  //     offset,
+  //     limit,
+  //     where: {
+  //       name: {
+  //         [Op.iLike]: `%${search}%`
+  //       }
+  //     }
+  //   };
+  //   if (isSortFieldValid(sort)) options.order = [[sort.toLowerCase(), getSortDirection(direction)]];
+
+  //   return Book.findAll(options);
+  // }
 
   this.getById = (id) => {
     return Book.findOne({ where: { id } });

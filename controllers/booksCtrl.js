@@ -8,40 +8,20 @@ const books = [
 ];
 
 class BooksCtrl {
+
   async get(req, res) {
-    // asynchronous code
-    // bookRepository.get((err, data) => {
-    //   if (err) {
-    //     res.send("failed");
-    //   } else {
-    //     res.status(200);
-    //     res.send(data);
-    //   }
-    // });
-
-    // bookRepository.get()
-    //   .then(function (data) {
-    //     res.status(200);
-    //     res.json(data.rows);
-    //   })
-    //   .catch(function (err) {
-    //     logger.error(err);
-    //     res.status(500);
-    //     res.send("error");
-    //   });
-
     try {
       const search = req.query.search || "";
       const sort = req.query.sort || "";
       const direction = req.query.direction || "";
       const limit = req.query.limit || 2;
-      const offset = req.query.offset || 0;
+      const pageIndex = req.query.pageIndex || 0;
       const options = {
         search,
         sort,
         direction,
         limit,
-        offset
+        pageIndex
       };
       const data = await bookRepository.get(options);
       res.status(200);
@@ -52,6 +32,51 @@ class BooksCtrl {
       res.send("Internal Server Error");
     }
   }
+
+  // async get(req, res) {
+  //   // asynchronous code
+  //   // bookRepository.get((err, data) => {
+  //   //   if (err) {
+  //   //     res.send("failed");
+  //   //   } else {
+  //   //     res.status(200);
+  //   //     res.send(data);
+  //   //   }
+  //   // });
+
+  //   // bookRepository.get()
+  //   //   .then(function (data) {
+  //   //     res.status(200);
+  //   //     res.json(data.rows);
+  //   //   })
+  //   //   .catch(function (err) {
+  //   //     logger.error(err);
+  //   //     res.status(500);
+  //   //     res.send("error");
+  //   //   });
+
+  //   try {
+  //     const search = req.query.search || "";
+  //     const sort = req.query.sort || "";
+  //     const direction = req.query.direction || "";
+  //     const limit = req.query.limit || 2;
+  //     const offset = req.query.offset || 0;
+  //     const options = {
+  //       search,
+  //       sort,
+  //       direction,
+  //       limit,
+  //       offset
+  //     };
+  //     const data = await bookRepository.get(options);
+  //     res.status(200);
+  //     res.json(data);
+  //   } catch (err) {
+  //     logger.error(err);
+  //     res.status(500);
+  //     res.send("Internal Server Error");
+  //   }
+  // }
 
   async getById(req, res) {
     const data = await bookRepository.getById(+req.params.id);
