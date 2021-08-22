@@ -38,6 +38,17 @@ function BookRepository() {
     return Book.findAll(options);
   }
 
+  this.count = ({ search }) => {
+    const options = {
+      where: {
+        name: {
+          [Op.iLike]: `%${search}%`
+        }
+      }
+    };
+    return Book.count(options);
+  }
+
   // this.get = ({ search, sort, direction, offset, limit }) => {
   //   const options = {
   //     offset,
