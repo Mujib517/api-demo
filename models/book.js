@@ -9,7 +9,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Book.init({
-    id: DataTypes.NUMBER,
+    id: {
+      type: DataTypes.NUMBER,
+      primaryKey: true
+    },
     name: DataTypes.STRING,
     price: DataTypes.NUMBER
   }, {

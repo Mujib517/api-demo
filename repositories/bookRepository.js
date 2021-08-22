@@ -1,58 +1,33 @@
-const pool = require('../db');
+// const pool = require('../db');
+const Book = require('../models').Book;
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 function BookRepository() {
 
-  // this.get = function (cb) {
-  //   pool.query('SELECT * FROM books', function (err, data) {
-  //     if (err) {
-  //       logger.log({ level: 'error', message: err });
-  //       cb(err);
-  //     } else {
-  //       logger.info({ level: 'info', message: data.rows });
-  //       cb(null, data.rows);
-  //     }
-  //   });
-  // }
-
-  this.get = () => {
-    return pool.query('SELECT id,name,price FROM books');
+  this.get = (search) => {
+    const options = {
+      where: {
+        name: {
+          [Op.iLike]: `%${search}%`
+        }
+      }
+    };
+    return Book.findAll(options);
   }
 
   this.getById = (id) => {
-    const query = {
-      text: 'SELECT id,name,price FROM books where id=$1',
-      values: [id],
-    };
-
-    return pool.query(query);
+    return Book.findOne({ where: { id } });
   }
 
-  this.save = (book) => {
-    const query = {
-      text: 'INSERT INTO books(name,price) VALUES ($1,$2)',
-      values: [book.name, book.price],
-    };
-
-    return pool.query(query);
+  this.save = (data) => {
+    const book = new Book(data);
+    return book.save();
   }
 
   this.delete = (id) => {
-    const query = {
-      text: 'DELETE FROM books WHERE id=$1',
-      values: [id],
-    };
-
-    return pool.query(query);
+    return Book.destroy({ where: { id: id } });
   }
-
-  this.update = (id, book) => {
-    const query = {
-      text: 'UPDATE books SET name=$2,price=$3 WHERE id=$1',
-      values: [id, book.name, book.price],
-    };
-    return pool.query(query);
-  }
-
 }
 
 

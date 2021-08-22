@@ -31,9 +31,10 @@ class BooksCtrl {
     //   });
 
     try {
-      const data = await bookRepository.get();
+      const search = req.query.search;
+      const data = await bookRepository.get(search);
       res.status(200);
-      res.json(data.rows);
+      res.json(data);
     } catch (err) {
       logger.error(err);
       res.status(500);
@@ -43,13 +44,20 @@ class BooksCtrl {
 
   async getById(req, res) {
     const data = await bookRepository.getById(+req.params.id);
-    if (data.rows.length) {
+    if (data) {
       res.status(200);
-      res.json(data.rows[0]);
+      res.json(data);
     } else {
       res.status(404);
-      res.send("Not found");
+      res.send("not found");
     }
+    // if (data.rows.length) {
+    //   res.status(200);
+    //   res.json(data.rows[0]);
+    // } else {
+    //   res.status(404);
+    //   res.send("Not found");
+    // }
   }
 
   async post(req, res) {
