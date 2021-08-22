@@ -31,7 +31,7 @@ class BooksCtrl {
     //   });
 
     try {
-      const search = req.query.search;
+      const search = req.query.search || "";
       const data = await bookRepository.get(search);
       res.status(200);
       res.json(data);
