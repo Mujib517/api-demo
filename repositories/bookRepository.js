@@ -1,5 +1,6 @@
 // const pool = require('../db');
 const Book = require('../models').Book;
+const Review = require('../models').Review;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
@@ -54,7 +55,12 @@ function BookRepository() {
   // }
 
   this.getById = (id) => {
-    return Book.findOne({ where: { id } });
+    const options = {
+      attributes: ['id', 'name', 'price'],
+      where: { id },
+      include: [{ attributes: ['subject', 'message', 'rating'], model: Review }]
+    };
+    return Book.findOne(options);
   }
 
   this.save = (data) => {

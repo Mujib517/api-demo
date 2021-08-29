@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const booksRouter = require('./routes/bookRouter');
 const defaultRouter = require('./routes/defaultRouter');
+const reviewRouter = require('./routes/reviewRouter');
 const app = express();
 
 
@@ -35,6 +36,7 @@ app.use(bodyParser.json());
 // routes
 app.use('/', defaultRouter);
 app.use('/api/books', booksRouter);
+app.use('/api/reviews', reviewRouter);
 
 
 // GET, POST, PUT, DELETE
