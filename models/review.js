@@ -24,11 +24,26 @@ module.exports = (sequelize, DataTypes) => {
         subject: {
             type: DataTypes.STRING,
             allowNull: false,
+            validate: {
+                notNull: {
+                    msg: 'Please enter Subject'
+                },
+                len: {
+                    min: 3,
+                    max: 10,
+                    msg: "Invalid Subject line"
+                }
+            }
         },
         message: DataTypes.STRING,
         rating: {
             type: DataTypes.NUMBER,
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notNull: {
+                    msg: 'Please enter a rating'
+                }
+            }
         }
     }, {
         sequelize,
