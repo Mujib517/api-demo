@@ -1,5 +1,4 @@
-const userRepository = require("../repositories/userRepository");
-const { getToken, hashPwd, verifyPwd } = require("../utils/auth");
+const userService = require("../services/userService");
 
 const hasValidationErrors = (e) => e.errors && e.errors.length === 0;
 
@@ -9,10 +8,7 @@ class UserCtrl {
 
     async register(req, res) {
         try {
-            const hashedPwd = await hashPwd(req.body.password);
-            req.body.password = hashedPwd;
-            await userRepository.add(req.body);
-
+            await userService.saveUser(req.body);
             res.status(201).send();
         } catch (e) {
             if (hasValidationErrors(e)) res.status(500).send(e.errors);
@@ -25,24 +21,14 @@ class UserCtrl {
     }
 
     async login(req, res) {
-        const username = req.body.username;
-        const pwd = req.body.password;
-
-        const user = await userRepository.getUser(username, pwd);
-
-        if (user) {
-            const isValid = await verifyPwd(pwd, user.password);
-            if (isValid) {
-                const token = await getToken(username);
-                const response = {
-                    username,
-                    token
-                }
-                res.status(200).send(response);
-            }
-            else res.status(401).send("Invalid username or password");
-        }
-        else res.status(401).send("Invalid username or password");
+        const isValid = await userService.isLoginValid(req.body);
+        if (isValid) {
+            const token = await userService.generateToken(req.body);
+            res.status(200).json({
+                username: req.body.username,
+                token
+            });
+        } else res.status(401).send("Unauthorized");
     }
 }
 
