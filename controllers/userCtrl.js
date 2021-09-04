@@ -1,4 +1,5 @@
 const userRepository = require("../repositories/userRepository");
+const { getToken } = require("../utils/auth");
 
 const hasValidationErrors = (e) => e.errors && e.errors.length === 0;
 
@@ -16,6 +17,23 @@ class UserCtrl {
             else if (keyExists(e)) res.status(400).send("User already exists");
             else res.status(500).send("Internal Server Error");
         }
+    }
+
+    async login(req, res) {
+        const username = req.body.username;
+        const pwd = req.body.password;
+
+        const isValid = await userRepository.validate(username, pwd);
+
+        if (isValid) {
+            const token = await getToken(username);
+            const response = {
+                username,
+                token
+            }
+            res.status(200).send(response);
+        }
+        else res.status(401).send("Invalid username or password");
     }
 }
 

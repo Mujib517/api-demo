@@ -6,6 +6,14 @@ class UserRepository {
     add(user) {
         return User.create(user);
     }
+
+    async validate(username, password) {
+        const user = await User.findOne({
+            where: { username, password }
+        });
+        
+        return !!user;
+    }
 }
 
 
