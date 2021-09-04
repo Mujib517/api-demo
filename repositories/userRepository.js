@@ -7,12 +7,12 @@ class UserRepository {
         return User.create(user);
     }
 
-    async validate(username, password) {
+    async getUser(username, password) {
         const user = await User.findOne({
-            where: { username, password }
+            where: { username }
         });
-        
-        return !!user;
+
+        return user;
     }
 }
 
