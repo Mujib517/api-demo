@@ -11,7 +11,7 @@ const booksRouter = require('./routes/bookRouter');
 const defaultRouter = require('./routes/defaultRouter');
 const reviewRouter = require('./routes/reviewRouter');
 const userRouter = require('./routes/userRouter');
-const { basicAuth } = require('./utils/middlewares');
+const { tokenAuth } = require('./utils/middlewares');
 const app = express();
 
 
@@ -41,6 +41,8 @@ app.use('/', defaultRouter); // home and health endpoints
 app.use('/api/users', userRouter);
 
 // app.use(basicAuth);
+
+app.use(tokenAuth);
 
 app.use('/api/books', booksRouter);
 app.use('/api/reviews', reviewRouter);

@@ -1,3 +1,5 @@
+const { verifyToken } = require('./auth');
+
 function basicAuth(req, res, next) {
     const authorization = req.headers.authorization;
 
@@ -15,7 +17,23 @@ function basicAuth(req, res, next) {
     else res.status(401).send("Unauthorized");
 }
 
+const tokenAuth = async (req, res, next) => {
+    try {
+        const authHeader = req.headers.authorization;
+        if (!authHeader) {
+            res.status(401).send("Unauthorized");
+        } else {
+            const token = authHeader.split(' ')[1];
+            await verifyToken(token);
+            next();
+        }
+    } catch (e) {
+        res.status(401).send("Unauthorized");
+    }
+}
+
 
 module.exports = {
-    basicAuth
+    basicAuth,
+    tokenAuth
 }

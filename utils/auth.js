@@ -1,9 +1,14 @@
 const jwt = require('jsonwebtoken');
 
-const getToken = username => jwt.sign({ username }, 'secret', {
+const key = 'secret';
+
+const getToken = username => jwt.sign({ username }, key, {
     expiresIn: '1h'
 });
 
+const verifyToken = token => jwt.verify(token, key);
+
 module.exports = {
-    getToken
+    getToken,
+    verifyToken
 };
