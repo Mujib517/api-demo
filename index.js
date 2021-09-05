@@ -13,6 +13,7 @@ const defaultRouter = require('./routes/defaultRouter');
 const reviewRouter = require('./routes/reviewRouter');
 const userRouter = require('./routes/userRouter');
 const { tokenAuth } = require('./utils/middlewares');
+const personCtrl = require('./controllers/personCtrl');
 const app = express();
 
 
@@ -38,6 +39,9 @@ app.use(bodyParser.json());
 // monitoring
 // polling
 // routes
+
+app.get('/api/persons', personCtrl.get);
+app.post('/api/persons', personCtrl.post);
 
 app.use('/', defaultRouter); // home and health endpoints
 app.use('/api/users', userRouter);
