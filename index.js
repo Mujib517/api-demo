@@ -4,6 +4,7 @@
 // middleware
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
@@ -28,6 +29,7 @@ const removePoweredByHeader = (req, res, next) => {
 
 app.use(morgan('combined', { stream: accessLogStream }));
 
+app.use(cors());
 // middlewares
 app.use(removePoweredByHeader);
 app.use(bodyParser.json());
