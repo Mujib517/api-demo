@@ -14,7 +14,7 @@ class BooksCtrl {
       const search = req.query.search || "";
       const sort = req.query.sort || "";
       const direction = req.query.direction || "";
-      const limit = req.query.limit || 2;
+      const limit = req.query.limit || 10;
       const pageIndex = req.query.pageIndex || 0;
       const options = {
         search,
