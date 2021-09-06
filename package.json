@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "sequelize db:migrate --env production",
     "start": "NODE_ENV=production node index"
   },
   "keywords": [],
