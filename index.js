@@ -47,7 +47,7 @@ app.use('/api/users', userRouter);
 
 // app.use(basicAuth);
 
-app.use(tokenAuth);
+// app.use(tokenAuth);
 
 app.use('/api/books', booksRouter);
 app.use('/api/reviews', reviewRouter);
