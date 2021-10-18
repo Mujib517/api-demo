@@ -17,7 +17,7 @@ const personCtrl = require('./controllers/personCtrl');
 const app = express();
 
 
-app.listen(process.env.PORT || 8080, function () {
+app.listen(process.env.PORT || 3000, function () {
   console.log("Server is running on 3000");
 });
 

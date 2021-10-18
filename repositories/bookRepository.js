@@ -83,6 +83,17 @@ function BookRepository() {
 
     return Book.count(options);
   }
+
+  this.update = (id, data) => {
+    delete data.id;
+    Book.findOne({ where: { id } })
+      .then(book => {
+        return book.update(data);
+      })
+      .catch(e => {
+        throw new Error("not found");
+      });
+  }
 }
 
 module.exports = new BookRepository();
