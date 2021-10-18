@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
                 },
                 len: {
                     min: 3,
-                    max: 10,
+                    max: 100,
                     msg: "Invalid Subject line"
                 }
             }

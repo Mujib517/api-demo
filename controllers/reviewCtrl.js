@@ -1,10 +1,10 @@
 const reviewRepository = require("../repositories/reviewRepository");
 
-class ReviewCtrl {
+const hasValidationErrors = (e) => {
+    return e.errors && e.errors.length === 0
+}
 
-    hasValidationErrors(e) {
-        return e.errors && e.errors.length === 0
-    }
+class ReviewCtrl {
 
     async post(req, res) {
         try {
@@ -12,7 +12,7 @@ class ReviewCtrl {
 
             res.status(201).send();
         } catch (e) {
-            if (this.hasValidationErrors(e)) res.status(500).send(e.errors);
+            if (hasValidationErrors(e)) res.status(500).send(e.errors);
             else res.status(500).send("Internal Server Error");
         }
     }
