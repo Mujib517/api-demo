@@ -24,8 +24,16 @@ class BooksCtrl {
         pageIndex
       };
       const data = await bookRepository.get(options);
+      const totalRecords = await bookRepository.count(options);
+      const response = {
+        metadata: {
+          totalRecords,
+          totalPages: Math.ceil(totalRecords / limit)
+        },
+        books: data
+      };
       res.status(200);
-      res.json(data);
+      res.json(response);
     } catch (err) {
       logger.error(err);
       res.status(500);

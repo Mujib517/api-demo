@@ -71,6 +71,18 @@ function BookRepository() {
   this.delete = (id) => {
     return Book.destroy({ where: { id: id } });
   }
+
+  this.count = (opts) => {
+    const options = {
+      where: {
+        name: {
+          [Op.iLike]: `%${opts.search}%`
+        }
+      }
+    };
+
+    return Book.count(options);
+  }
 }
 
 module.exports = new BookRepository();
