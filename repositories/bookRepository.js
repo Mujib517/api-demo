@@ -11,16 +11,17 @@ function BookRepository() {
       name: true,
       price: true,
       id: true,
+      updatedAt: true
     };
 
-    return sortFields[field.toLowerCase()];
+    return sortFields[field];
   }
 
   const getSortDirection = (direction) => {
     direction = direction.toLowerCase();
     if (direction === 'asc') return direction;
     if (direction === 'desc') return direction;
-    return 'asc';
+    return 'desc';
   }
 
   this.get = ({ search, sort, direction, pageIndex, limit }) => {
@@ -34,7 +35,7 @@ function BookRepository() {
         }
       }
     };
-    if (isSortFieldValid(sort)) options.order = [[sort.toLowerCase(), getSortDirection(direction)]];
+    if (isSortFieldValid(sort)) options.order = [[sort, getSortDirection(direction)]];
 
     return Book.findAll(options);
   }

@@ -12,8 +12,8 @@ class BooksCtrl {
   async get(req, res) {
     try {
       const search = req.query.search || "";
-      const sort = req.query.sort || "";
-      const direction = req.query.direction || "";
+      const sort = req.query.sort || "updatedAt";
+      const direction = req.query.direction || "desc";
       const limit = req.query.limit || 10;
       const pageIndex = req.query.pageIndex || 0;
       const options = {
